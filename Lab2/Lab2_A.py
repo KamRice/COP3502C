@@ -10,10 +10,10 @@ if side1 == side2:
     else:
         output = 'an isosceles triangle!'
 elif side1 == side3:
-    output = 'an isosceles triangle'
+    output = 'an isosceles triangle!'
 elif side2 == side3:
-    output = 'an isosceles triangle'
+    output = 'an isosceles triangle!'
 else:
-    output = 'a scalene triangle'
+    output = 'a scalene triangle!'
 
 print('This is', output)

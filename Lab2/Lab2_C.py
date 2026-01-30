@@ -19,7 +19,7 @@ elif convertingFrom == "CELSIUS":
     else:
         output = temperatureOriginal
 else:
-    if convertingTo == "Celsius":
+    if convertingTo == "CELSIUS":
         output = (temperatureOriginal - 32) / (9 / 5)
     elif convertingTo == "KELVIN":
         output = (temperatureOriginal + 459.67) * 5 / 9
