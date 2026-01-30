@@ -1,6 +1,6 @@
-side1 = int(input("Side length 1:"))
-side2 = int(input("Side length 2:"))
-side3 = int(input("Side length 3:"))
+side1 = float(input("Side length 1:"))
+side2 = float(input("Side length 2:"))
+side3 = float(input("Side length 3:"))
 
 output = ''
 
