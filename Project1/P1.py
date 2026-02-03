@@ -34,7 +34,6 @@ card_Map = {
 
 }
 
-
 def main():
     # General Variables
 
@@ -85,6 +84,8 @@ def blackjack(score):
         main()
     elif score >= 22:
         print("You exceeded 21! You lose.\n")
+        games_Lost += 1
+        games_Played += 1
         main()
 
     player_input_choice = validate_player_input()
@@ -106,7 +107,7 @@ def validate_player_input():
 
     if player_input_choice <= 0 or player_input_choice >= 5:
         print("Invalid input!", end="\n\n")
-        print("Please enter and integer value between 1 and 4.")
+        print("Please enter an integer value between 1 and 4.")
         return validate_player_input()
     else:
         return player_input_choice
@@ -126,7 +127,7 @@ def get_statistics(score):
     else:
         win_percentage = 0
 
-    print("\nPercentage of Player wins:", round(win_percentage, 1), "\n")
+    print("Percentage of Player wins: ", round(win_percentage, 1), "%\n", sep = '')
 
     player_input_choice = validate_player_input()
 
@@ -152,8 +153,8 @@ def hold_hand(score):
     print("\nDealer's hand:", dealer_score)
     print("Your hand is:", score)
 
-    if score > dealer_score:
-        print("\nYou win!")
+    if score > dealer_score or dealer_score >= 22:
+        print("\nYou win!\n")
         games_Won += 1
         games_Played += 1
         main()
