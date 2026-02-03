@@ -1,7 +1,5 @@
-x = 55
-
-for i in range(3, 6, -1):
-    x += i
-    print(x, end="")
-
-print(x)
+total = 0
+for i in range(4):
+    for j in range(i+1):
+        total += 1
+print(total)

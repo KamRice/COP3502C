@@ -29,7 +29,7 @@ card_Map = {
 }
 
 
-def blackjack():
+def main():
     # General Variables
 
     # Update Global Game Count
@@ -38,9 +38,6 @@ def blackjack():
 
     # Dealer Hand Variables
     dealers_hand = rng.next_int(11) + 16
-
-    # Player Variables
-    player_input_choice = None
 
     # Initial Player Hand
     player_current_card = card_Map[rng.next_int(13) + 1]
@@ -54,13 +51,43 @@ def blackjack():
     player_input_choice = validate_player_input()
 
     if player_input_choice == 1:
-        print("Option: ", player_input_choice)
+        blackjack( player_score)
     elif player_input_choice == 2:
         print("Option: ", player_input_choice)
     elif player_input_choice == 3:
         get_statistics()
     else:
         print("Option: ", player_input_choice)
+
+
+def blackjack(score):
+    # Deal new player card.
+    player_new_card = card_Map[rng.next_int(13) + 1]
+    score += player_new_card["value"]
+
+    # Display game information.
+    print(f"\nYour card is a {player_new_card['name']}!")
+    print(f"Your hand is {score}!", end="\n\n")
+
+    # Validate player hand.
+
+    if score == 21:
+        print("BLACKJACK! You win!\n")
+        main()
+    elif score >= 22:
+        print("You exceeded 21! You lose.\n")
+        main()
+
+    player_input_choice = validate_player_input()
+
+    if player_input_choice == 1:
+        blackjack(score)
+    elif player_input_choice == 2:
+        print("Option: ", player_input_choice)
+    elif player_input_choice == 3:
+        get_statistics()
+    else:
+        return
 
 
 def validate_player_input():
@@ -77,7 +104,6 @@ def validate_player_input():
 
 
 def get_statistics():
-
     global games_Won
     global games_Played
 
@@ -93,14 +119,21 @@ def get_statistics():
 
     print("\nPercentage of Player wins:", round(win_percentage, 1))
 
-def exit_game():
+
+def hold_hand():
     global games_Played
     global games_Won
     global games_Lost
 
     games_Played += 1
+
+
+def give_new_card():
+    pass
+
+
 """
 Main Loop
 """
 
-blackjack()
+main()
