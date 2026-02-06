@@ -12,22 +12,22 @@ active_Game = False
 
 # Player Variables
 current_card = None
-current_hand_value = 0
+current_Hand_Value = 0
 
 # Dealer Variables
-dealer_hand_value = 0
+dealer_Hand_Value = 0
 
 
 def start_game():
     global games_Played
     global current_card
-    global current_hand_value
+    global current_Hand_Value
 
     print("START GAME #", games_Played + 1, sep="", end="\n")
 
     give_new_card(rng.next_int(13) + 1)
 
-    display_hand_information(current_card, current_hand_value)
+    display_hand_information(current_card, current_Hand_Value)
 
     return True
 
@@ -35,11 +35,11 @@ def start_game():
 def end_game():
     global games_Played
     global current_card
-    global current_hand_value
+    global current_Hand_Value
 
     games_Played += 1
     current_card = None
-    current_hand_value = 0
+    current_Hand_Value = 0
 
     return False
 
@@ -104,44 +104,47 @@ def determine_card_value(rng_val):
 
 def display_hand_information(card, hand_value):
     print(f"\nYour card is a {card}!")
-    print(f"Your hand is {hand_value}!", end="\n")
+    print(f"Your hand is: {hand_value}", end="\n\n")
 
 
+# def compare_score_values()
 def hold_hand(player_hand_value):
     global games_Won
     global games_Lost
     global games_Tie
     global active_Game
-    global dealer_hand_value
+    global dealer_Hand_Value
 
-    dealer_hand_value = rng.next_int(11) + 16
+    dealer_Hand_Value = rng.next_int(11) + 16
 
-    if player_hand_value > dealer_hand_value or dealer_hand_value > 21:
+    if player_hand_value > dealer_Hand_Value or dealer_Hand_Value > 21:
         games_Won += 1
-        print("\nDealer's hand:", dealer_hand_value)
-        print("Your hand:", player_hand_value)
+        display_hand_values(current_Hand_Value, dealer_Hand_Value)
         print("\nYou win!\n")
         active_Game = end_game()
-    elif player_hand_value < dealer_hand_value:
+    elif player_hand_value < dealer_Hand_Value:
         games_Lost += 1
-        print("\nDealer's hand:", dealer_hand_value)
-        print("Your hand:", player_hand_value)
+        display_hand_values(current_Hand_Value, dealer_Hand_Value)
         print("\nDealer wins!\n")
         active_Game = end_game()
     else:
         games_Tie += 1
-        print("\nDealer's hand:", dealer_hand_value)
-        print("Your hand:", player_hand_value)
+        display_hand_values(current_Hand_Value, dealer_Hand_Value)
         print("\nIt's a tie! No one wins!\n")
         active_Game = end_game()
 
 
+def display_hand_values(player_hand_value, dealer_hand_value):
+    print("\nDealer's hand:", dealer_hand_value)
+    print("Your hand is:", player_hand_value)
+
+
 def give_new_card(rng_val):
     global current_card
-    global current_hand_value
+    global current_Hand_Value
 
     current_card = determine_card(rng_val)
-    current_hand_value += determine_card_value(rng_val)
+    current_Hand_Value += determine_card_value(rng_val)
 
 
 def display_game_statistics():
@@ -160,7 +163,7 @@ def display_game_statistics():
     else:
         win_percentage = 0
 
-    print("Percentage of Player wins: ", win_percentage, "%", sep='')
+    print("Percentage of Player wins: ", win_percentage, "%", sep='', end="\n\n")
 
 
 """
@@ -173,13 +176,13 @@ while not exit_Game:
         active_Game = start_game()
 
     # Gather player input for next action.
-    print("\n1. Get another card", "2. Hold hand", "3. Print statistics", "4. Exit", sep="\n", end="\n\n")
+    print("1. Get another card", "2. Hold hand", "3. Print statistics", "4. Exit", sep="\n", end="\n\n")
 
     player_input_choice = int(input("Choose an option: "))
 
     if player_input_choice < 1 or player_input_choice >= 5:
-        print("Invalid input!\n")
-        print("Please enter an integer value between 1 and 4.")
+        print("\nInvalid input!")
+        print("Please enter an integer value between 1 and 4.\n")
 
     # Route based off of player input.
     if player_input_choice == 1:
@@ -188,20 +191,20 @@ while not exit_Game:
         give_new_card(rng.next_int(13) + 1)
 
         # Display new card information
-        display_hand_information(current_card, current_hand_value)
+        display_hand_information(current_card, current_Hand_Value)
 
         # Check for win/lose conditions with new hand value.
-        if current_hand_value == 21:
+        if current_Hand_Value == 21:
             games_Won += 1
             active_Game = end_game()
-            print("\nBLACKJACK! You win!", end="\n\n")
-        elif current_hand_value >= 22:
+            print("BLACKJACK! You win!", end="\n\n")
+        elif current_Hand_Value >= 22:
             games_Lost += 1
             active_Game = end_game()
-            print("\nYou exceeded 21! You lose.", end="\n\n")
+            print("You exceeded 21! You lose.", end="\n\n")
 
     elif player_input_choice == 2:
-        hold_hand(current_hand_value)
+        hold_hand(current_Hand_Value)
     elif player_input_choice == 3:
         display_game_statistics()
     elif player_input_choice == 4:
