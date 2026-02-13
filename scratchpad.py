@@ -1,3 +1,6 @@
+import math
+
+
 def summate(*passed_args):
     sum_total = 0
     for argument in passed_args:
@@ -33,7 +36,9 @@ def foo(a, b, c=2):
     print(b)
     print(c)
 
+
 x = 0
+
 
 def scope_test():
     x = 15
@@ -51,15 +56,17 @@ sum_all = lambda *args: sum(args)
 
 add1 = lambda val: val + 1
 
-def magic(num, a_list): #illustrate difference between an immutable variable "Num" and a mutable variable "a_list"
+
+def magic(num, a_list):  # illustrate difference between an immutable variable "Num" and a mutable variable "a_list"
     num += 4
     a_list[1] = 4
-    #a_list = [100, 102] #declared but not used.
+    # a_list = [100, 102] #declared but not used.
 
-#x = 2
+
+# x = 2
 seq_nums = [6, 9, 12]
 magic(x, seq_nums)
-#print(x, seq_nums)
+# print(x, seq_nums)
 
 """
 So for the magic() function above, the important concept is that the List object "a_list" is a MUTABLE object, 
@@ -76,6 +83,7 @@ magic() executes the local space instance of the num parameter (a Value) is tras
 
 """
 
+
 def count_vowels(text):
     vowels = 'aeiou'
     count = 0
@@ -86,14 +94,45 @@ def count_vowels(text):
 
     return count
 
-#print(count_vowels("yippee"))
+
+# print(count_vowels("yippee"))
 
 def min_terms(value):
     i = 1
     summed_value = 0
     while summed_value < value:
-        summed_value += (i**i)/(2 * i)
+        summed_value += (i ** i) / (2 * i)
         i += 1
     return i - 1
 
-#print(min_terms(10000))
+
+# print(min_terms(10000))
+
+def star_triangles(num):
+    for n in range(num):
+        print("*" * n, sep='')
+
+
+# star_triangles(5)
+
+def reversed_start_triangles(num):
+    for n in range(num):
+        print("*" * (num - n), sep='')
+
+
+# reversed_start_triangles(5)
+
+def transform_numbers(num):
+    for n in range(1, num + 1):
+        if math.sqrt(n) % 1 == 0:
+            if n % 2 == 0:
+                print("EvenSquare")
+            else:
+                print("Square")
+        else:
+            print(n)
+
+
+#transform_numbers(55)
+
+print(9 / 2)
