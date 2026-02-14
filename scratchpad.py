@@ -133,6 +133,22 @@ def transform_numbers(num):
             print(n)
 
 
-#transform_numbers(55)
+# transform_numbers(55)
 
-print(9 / 2)
+def is_prime(num):
+    for n in range(2, num):
+        if num % n == 0:
+            return False
+    return True
+
+
+# print(is_prime(90))
+
+def identical_digits(num):
+    for n in range(num, 91):
+        print(n, end=" ")
+        if n // 10 == n % 10:
+            break
+
+
+#identical_digits(66)
