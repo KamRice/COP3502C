@@ -151,4 +151,8 @@ def identical_digits(num):
             break
 
 
-#identical_digits(66)
+# identical_digits(66)
+
+fruits = {'a': 'apple', 'b': 'banana', 'c': 'cranberry', 'd': 'dragon fruit'}
+
+print('d' in fruits)
