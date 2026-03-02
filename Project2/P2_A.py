@@ -26,16 +26,16 @@ def string_to_rle(rle_string):
 def main():
     user_input = 1
 
-    print("Welcome to the RLE image encoder:", end="\n\n")
+    print("Welcome to the RLE image encoder!", end="\n\n")
     print("Displaying Spectrum Image:")
 
     console_gfx.display_image(console_gfx.test_rainbow)
 
-    print("\n\n", end="")
+    print()
 
     while user_input:
         display_menu()
-        user_input = int(input("Select a menu Option: "))
+        user_input = int(input("Select a Menu Option: "))
 
         if user_input == 1:
             filename = input("Enter name of file to load: ")
@@ -49,9 +49,6 @@ def main():
             if image_data is not None:
                 console_gfx.display_image(image_data)
 
-
-# if __name__ == '__main__':
-#   main()
 
 def consecutive_fours(input_list):
     streak = 1
@@ -94,17 +91,5 @@ def numerical_count(string):
             count += 1
     return count
 
-
-# test_list = [3, 2, 5, 4, 4, 4, 5, 5, 5]
-# test_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-# test_list = [5, 12, 8, 5, 3, 11, 7, 2, 3, 16, 4]
-test_list = [2, 1, 3]
-test_string = "abcd3fgh1"
-
-# print(consecutive_fours(test_list))
-
-# sum_by_parity(test_list)
-
-# print(expand_by_index(test_list))
-
-print(numerical_count(test_string))
+if __name__ == '__main__':
+  main()
