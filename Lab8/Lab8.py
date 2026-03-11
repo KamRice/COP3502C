@@ -34,10 +34,21 @@ def process_list(value):
     return out
 
 
-def group_by(values, func):
-    print(len(values))
-    if len(values) > 0:
-        {}.update(group_by(values[:-1], func))
+def group_by(val, func):
+    if not val:
+        return {}
+
+    out_dict = group_by(val[:-1], func)
+    value = val[-1]
+    key = func(value)
+
+    if key in out_dict:
+        out_dict[key].append(value)
+    else:
+        out_dict[key] = [value]
+
+    return out_dict
 
 
+# group_by([1, 2, 3, 4, 5, 6, 7, 8], lambda x: x % 2 == 0)
 print(group_by([1, 2, 3, 4, 5, 6, 7, 8], lambda x: x % 2 == 0))

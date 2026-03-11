@@ -106,4 +106,9 @@ print(collatz(1333))
 
 print("][][][][")
 
+def mystery(s):
+    if len(s) <= 1:
+        return s
+    return s[-1] + mystery(s[:-1])
 
+print(mystery("hello"))
