@@ -1,3 +1,5 @@
+from os.path import join
+
 import console_gfx
 
 
@@ -19,7 +21,6 @@ def count_runs(flat_data):
     # print(f"Analyze: {flat_data}")
     # print()
 
-    current_member_value = flat_data[0]
     current_run = 1
     run_count = 0
 
@@ -43,7 +44,6 @@ def encode_rle(flat_data):
     # print()
 
     output_list = []
-    current_member_value = flat_data[0]
     current_run = 1
 
     for member in range(1, len(flat_data)):
@@ -109,20 +109,64 @@ def string_to_data(rle_string):
 
 
 def to_rle_string(rle_data):
-    pass
+    temp_list = []
+
+    if len(rle_data) % 2 != 0:
+        return ''
+
+    for index in range(0, len(rle_data), 2):
+        temp_list.append(f"{rle_data[index]}{rle_data[index + 1]}")
+
+    return ":".join(temp_list)
 
 
 def string_to_rle(rle_string):
+    output_list = []
     split_string = rle_string.split(":")
 
-    print(len(split_string))
-    print()
+    # print(len(split_string))
+    # print()
     for index in range(0, len(split_string)):
-        print(split_string[index])
 
-    print()
-    print()
-    rle_string.split(":")
+        # print(f" --- {split_string[index]} --- ")
+
+        if len(split_string[index]) >= 3:
+            # I guess we can assume that input will not be in HEX Character?
+
+            part1 = int(split_string[index][0:2])
+            part2 = int(split_string[index][-1])
+
+            # print(f"Append: {part1}")
+            output_list.append(part1)
+            # print(f"Append: {part2}")
+            output_list.append(part2)
+        else:
+
+            part1 = int(split_string[index][0])
+            part2 = int(split_string[index][1])
+
+            # print(f"Append: {part1}")
+            output_list.append(part1)
+            # print(f"Append: {part2}")
+            output_list.append(part2)
+
+    return output_list
+
+
+# I understand this wasn't asked for, but i didn't see any of the described methods providing a flat data output
+# when provided with a non flat RLE input.
+def rle_to_flat(rle_data):
+    # print(rle_data)
+
+    output_string = ''
+
+    if len(rle_data) % 2 != 0:
+        return ''
+    for index in range(0, len(rle_data), 2):
+        # print(f"{rle_data[index]} -- {rle_data[index + 1]}")
+        for i in range(0, rle_data[index]):
+            output_string += str(rle_data[index + 1])
+    return output_string
 
 
 """
@@ -139,6 +183,7 @@ def main():
     console_gfx.display_image(console_gfx.test_rainbow)
 
     print()
+    print()
 
     while user_input:
         display_menu()
@@ -150,12 +195,28 @@ def main():
         elif user_input == 2:
             image_data = console_gfx.test_image
             print("Test image data loaded.")
+            print()
         elif user_input == 3:
-            image_data = input("Enter an RLE string to be decoded: ")
-            decode_rle(string_to_rle(image_data))
+            image_data = string_to_rle(input("Enter an RLE string to be decoded: "))
+            print()
+        elif user_input == 4:
+            image_data = string_to_data(input("Enter the hex string holding RLE data:"))
+            print()
+        elif user_input == 5:
+            image_data = string_to_data(input("Enter the hex string holding flat data:"))
+            print()
         elif user_input == 6:
             if image_data is not None:
+                print("Displaying image...")
                 console_gfx.display_image(image_data)
+                print()
+        elif user_input == 7:
+            print(f"RLE representation: {to_rle_string(image_data)}")
+            print()
+        elif user_input == 8:
+            print(f"RLE hex values: {to_hex_string(image_data)}\n")
+        elif user_input == 9:
+            print(f"Flat hex values: {rle_to_flat(image_data)}\n")
 
 
 """
@@ -180,6 +241,7 @@ def hex_char_decode(digit):
             return 14
         if digit.upper() == "F":
             return 15
+    return None
 
 
 def hex_string_decode(hex_char):
@@ -265,5 +327,6 @@ def numerical_count(string):
             count += 1
     return count
 
-# if __name__ == '__main__':
-#     main()
+
+if __name__ == '__main__':
+    main()
