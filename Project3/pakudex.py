@@ -27,6 +27,7 @@ class Pakudex:
     def add_pakuri(self, species):
         if isinstance(species, Pakuri):
             self.species_array.append(species)
+        #need to update Dex Size field as well.
 
     def evolve_species(self, species):
         if self.species_array[species].evolve():
