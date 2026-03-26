@@ -39,53 +39,58 @@ def list_pakuri(pakudex):
     else:
         print("No Pakuri in Pakudex yet!")
 
-def add_new_pakuri(species):
-    new_species = input("Enter the name of the species to add: ")
+
+def show_pakuri_info(tgt_dex, species):
+    if tgt_dex.get_size() <= 0:
+        print("Error: No such Pakuri!")
+        return
+
+    species = tgt_dex.does_pakuri_exist(species)
+    if species:
+        print(f"\nSpecies: {species.species}")
+        print(f"Attack: {species.get_attack()}")
+        print(f"Defense: {species.get_defense()}")
+        print(f"Speed: {species.get_speed()}")
+        return
+
+    else:
+        print("Error: No such Pakuri!")
 
 
+def add_new_pakuri(tgt_dex, species):
+    if tgt_dex.get_size() >= tgt_dex.get_capacity():
+        return "Error: Pakudex is full!"
 
-def show_pakuri_info(pakudex, species):
-    pakudex_list = pakudex.get_species_array()
-    if len(pakudex_list) > 0:
+    if tgt_dex.does_pakuri_exist(species):
+        return "Error: Pakudex already contains this species!"
 
-        for index in range(0, len(pakudex_list)):
-
-            if pakudex_list[index].species == species:
-                print(f"\nSpecies: {pakudex_list[index].species}")
-                print(f"Attack: {pakudex_list[index].get_attack()}")
-                print(f"Defense: {pakudex_list[index].get_defense()}")
-                print(f"Speed: {pakudex_list[index].get_speed()}")
-                return
-        else:
-            print("Error: No such Pakuri!")
+    tgt_dex.add_pakuri(species)
+    return f"Pakuri species {species} successfully added!"
 
 
 if __name__ == '__main__':
     print("Welcome to Pakudex: Tracker Extraordinaire!\n", end='')
     dex = Pakudex(input("Enter max capacity of the Pakudex: "))
-    print(f"The Pakudex can hold {dex.capacity} species of Pakuri.\n")
+    print(f"The Pakudex can hold {dex.get_capacity()} species of Pakuri.\n")
 
-    obj = Pakuri("pika")
-    obj1 = Pakuri("CharChar")
-    obj2 = Pakuri("Bulby")
+    display_menu()
 
-    dex.add_pakuri(obj)
-    dex.add_pakuri(obj1)
-    dex.add_pakuri(obj2)
+    user_Input = get_user_input()
 
-display_menu()
+    while True:
+        if user_Input == 1:
+            list_pakuri(dex)
+        elif user_Input == 2:
+            show_pakuri_info(dex, input("Enter the name of the species to display: "))
+        elif user_Input == 3:
+            print(dex.add_pakuri(input("Enter the name of the species to add: ")))
+        elif user_Input == 4:
+            print(dex.evolve_species(input("Enter the name of the species to evolve: ")))
+        elif user_Input == 5:
+            print(dex.sort_pakuri())
+        elif user_Input == 6:
+            break
 
-user_Input = get_user_input()
+        display_menu()
 
-if user_Input == 1:
-    list_pakuri(dex)
-elif user_Input == 2:
-    show_pakuri_info(dex, input("Enter the name of the species to display: "))
-elif user_Input == 3:
-    pass
-elif user_Input == 4:
-    pass
-elif user_Input == 5:
-    pass
-elif user_Input == 6:
-    pass
+        user_Input = get_user_input()

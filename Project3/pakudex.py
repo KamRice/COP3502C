@@ -8,10 +8,10 @@ class Pakudex:
         self.species_array = []
 
     def get_size(self):
-        return self.size
+        return int(self.size)
 
     def get_capacity(self):
-        return self.capacity
+        return int(self.capacity)
 
     def get_species_array(self):
         return self.species_array
@@ -23,13 +23,38 @@ class Pakudex:
 
     def sort_pakuri(self):
         self.species_array.sort()
+        return "Pakuri have been sorted!"
 
-    def add_pakuri(self, species):
-        if isinstance(species, Pakuri):
-            self.species_array.append(species)
-        #need to update Dex Size field as well.
+    def add_pakuri(self, new_species):
+        if self.size >= self.get_capacity():  # Room left for new pakuri.
+            return "Error: Pakudex is full!"
+
+        if self.does_pakuri_exist(new_species):  # Is not duplicate Species
+            return "Error: Pakudex already contains this species!"
+
+        if not new_species:  # valid string, not just empty.
+            return None
+
+        self.get_species_array().append(Pakuri(new_species))
+        self.size += 1
+        return f"Pakuri species {new_species} successfully added!"
 
     def evolve_species(self, species):
-        if self.species_array[species].evolve():
-            return True
+        species = self.does_pakuri_exist(species)
+
+        if species:  # Does Species exist in Pakudex
+            species.evolve()
+            return f"{species.species} has evolved!"
+        return "Error: No such Pakuri!"
+
+    # Helpers #
+    def does_pakuri_exist(self, species_to_check):
+
+        if self.get_size() <= 0:
+            return False
+
+        for spec in self.get_species_array():
+            if spec.species == species_to_check:
+                return spec;
+
         return False

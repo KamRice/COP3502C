@@ -155,4 +155,22 @@ def identical_digits(num):
 
 fruits = {'a': 'apple', 'b': 'banana', 'c': 'cranberry', 'd': 'dragon fruit'}
 
-print('d' in fruits)
+#print('d' in fruits)
+students = {
+
+    "Ann": {"quiz": 4, "hw": 6},
+
+    "Ben": {"quiz": 7, "hw": 3},
+
+    "Cara": {"quiz": 5, "hw": 5}
+
+}
+
+total = 0
+
+for name in students:
+
+    total += students[name]["quiz"]
+
+
+print(total)
