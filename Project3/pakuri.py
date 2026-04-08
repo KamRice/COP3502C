@@ -9,13 +9,13 @@ class Pakuri:
         return self.species
 
     def get_attack(self):
-        return self.attack
+        return int(self.attack)
 
     def get_defense(self):
-        return self.defense
+        return int(self.defense)
 
     def get_speed(self):
-        return self.speed
+        return int(self.speed)
 
     def set_attack(self, new_attack):
         self.attack = new_attack
@@ -25,3 +25,15 @@ class Pakuri:
         self.defense *= 4
         self.speed *= 3
         return True
+
+    ########-------------########
+    ########  Overrides  ########
+    ########-------------########
+
+    def __lt__(self, other):
+        return self.species < other
+    def __gt__(self, other):
+        return self.species > other
+    def __eq__(self, other): #I'm not really using this overide currently. But I dont really want to touch this and break anything.
+        return self.species == other
+

@@ -14,40 +14,47 @@ class Pakudex:
         return int(self.capacity)
 
     def get_species_array(self):
+        if self.size <= 0:
+            return None
         return self.species_array
 
     def get_stats(self, species):
         if species in self.species_array:
-            return [self.species_array[species].get_attack(), self.species_array[species].get_defense(), self.species_array[species].get_speed()]
+            ind = self.species_array.index(species)
+            return [self.species_array[ind].get_attack(), self.species_array[ind].get_defense(), self.species_array[ind].get_speed()]
         return None
 
     def sort_pakuri(self):
         self.species_array.sort()
-        return "Pakuri have been sorted!"
+        return "Pakuri have been sorted!\n"
 
     def add_pakuri(self, new_species):
         if self.size >= self.get_capacity():  # Room left for new pakuri.
-            return "Error: Pakudex is full!"
+            print("Error: Pakudex is full!")
+            return False
 
         if self.does_pakuri_exist(new_species):  # Is not duplicate Species
-            return "Error: Pakudex already contains this species!"
+            return False
 
         if not new_species:  # valid string, not just empty.
             return None
 
-        self.get_species_array().append(Pakuri(new_species))
+        self.species_array.append(Pakuri(new_species))
         self.size += 1
-        return f"Pakuri species {new_species} successfully added!"
+        return True
 
     def evolve_species(self, species):
         species = self.does_pakuri_exist(species)
 
         if species:  # Does Species exist in Pakudex
             species.evolve()
-            return f"{species.species} has evolved!"
-        return "Error: No such Pakuri!"
+            return True
+        return False
 
-    # Helpers #
+    ########-------------########
+    ########   Helpers   ########
+    ########-------------########
+
     def does_pakuri_exist(self, species_to_check):
 
         if self.get_size() <= 0:
@@ -58,3 +65,42 @@ class Pakudex:
                 return spec;
 
         return False
+
+    ########-------------------------########
+    ######## Hexadecimal Conversions ########
+    ########-------------------------########
+
+    def hex_char_decode(self, digit):
+        # Determine if digit is decimal numeric
+        if 48 <= ord(digit) <= 57:
+            return int(digit)
+
+        if digit.upper() == "A":
+            return 10
+        if digit.upper() == "B":
+            return 11
+        if digit.upper() == "C":
+            return 12
+        if digit.upper() == "D":
+            return 13
+        if digit.upper() == "E":
+            return 14
+
+        return 15
+
+    def hex_string_decode(self, hex):
+        value = 0
+
+        # Format provided hex if needed
+        hex = hex.upper()
+
+        if hex[0:2] == "0X":
+            hex = hex[2:len(hex) + 1]
+
+        current_term = len(hex) - 1
+
+        for char in hex:
+            value += 16 ** current_term * self.hex_char_decode(char)
+            current_term -= 1
+
+        return value

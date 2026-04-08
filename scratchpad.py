@@ -166,11 +166,20 @@ students = {
 
 }
 
-total = 0
+# total = 0
+#
+# for name in students:
+#
+#     total += students[name]["quiz"]
+#
+#
+# print(total)
 
-for name in students:
-
-    total += students[name]["quiz"]
-
-
-print(total)
+try:
+    a = 3 * 2 // 4
+    b = 8 / 0
+    print(a + 2)
+except ZeroDivisionError as e:
+    print("Zero division error")
+except Exception as e:
+    print("Something wrong")
